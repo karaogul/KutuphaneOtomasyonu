@@ -34,5 +34,26 @@ namespace KutuphaneOtomasyonu.Kaynak
             dataGridView1.Columns[4].HeaderText = "Sayfa Sayısı";
             dataGridView1.Columns[5].HeaderText = "Basım Tarihi";
         }
+        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            excel.Application app = new excel.Application();
+            app.Visible = true;
+            Workbook Kullanicilar = app.Workbooks.Add(System.Reflection.Missing.Value);
+            Worksheet kaynak = (Worksheet)Kullanicilar.Worksheets[1];
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                Range alan = (Range)kaynak.Cells[1, 1];
+                alan.Cells[1, i + 1] = dataGridView1.Columns[i].HeaderText;
+            }
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                for (int j = 0; j < dataGridView1.Rows.Count; j++)
+                {
+                    Range alan2 = (Range)kaynak.Cells[j+1,i+1];
+                    alan2.Cells[2 , 1] = dataGridView1[i, j].Value;
+                }
+            }
+        }
     }
 }
